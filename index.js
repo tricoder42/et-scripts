@@ -9,6 +9,13 @@ process.on("unhandledRejection", err => {
     // No need to print it twice.
     process.exit(1)
   }
+
+  if (err.stderr) {
+    console.error(err.stderr)
+  } else {
+    console.error(err)
+  }
+
   throw err
 })
 

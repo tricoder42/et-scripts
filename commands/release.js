@@ -20,7 +20,7 @@ const npmTagForBranch = {
 
 async function devRelease() {
   // Get the next version
-  const { newVersion } = await getNewVersion("next")
+  await getNewVersion("next")
 
   await buildCommand()
 
@@ -97,7 +97,8 @@ async function release() {
   })
   if (!confirmGit) return
 
-  await exec("git add package.json scripts/build/results.json")
+  // await exec("git add package.json scripts/build/results.json");
+  await exec("git add package.json")
   try {
     await exec(`git commit -m "chore: release v${newVersion}"`)
   } catch (e) {
@@ -212,15 +213,15 @@ async function getNewVersion(npmTag) {
 
 async function npmPublish(version, options) {
   const results = await Promise.all(
-    getPackages().map(async ([packagePath, pkg]) => {
+    packages.map(async pkg => {
       const spinner = ora({
         isEnabled: !process.env.CI,
-        text: `Publishing ${pkg.name}@${version}`
+        text: `Publishing ${pkg.getPackageJson().name}@${version}`
       })
 
       spinner.start()
       try {
-        await npmPublishPackage(packagePath, options)
+        await npmPublishPackage(pkg.getBuildDir(), options)
       } catch (e) {
         spinner.fail(`Version ${version} already published!`)
         console.log(e)

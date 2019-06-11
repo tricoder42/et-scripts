@@ -6,6 +6,20 @@
   "bin": {
     "etc": "index.js"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "prettier": {
+    "semi": false
+  },
   "dependencies": {
     "@babel/core": "^7.4.5",
     "@babel/plugin-proposal-export-default-from": "^7.2.0",
@@ -41,5 +55,9 @@
     "semver": "^6.1.1",
     "targz": "^1.0.1",
     "typescript": "^3.5.1"
+  },
+  "devDependencies": {
+    "husky": "^2.4.0",
+    "lint-staged": "^8.2.0"
   }
 }
