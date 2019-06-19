@@ -80,6 +80,9 @@ function getPlugins(pkg, bundleType) {
       extensions
     }),
 
+    // We still need CommonJS for external deps like object-assign.
+    commonjs(),
+
     typescript({
       tsconfigOverride: {
         include: [`${packageDir}/**/*.ts`, `${packageDir}/**/*.tsx`],
@@ -102,9 +105,6 @@ function getPlugins(pkg, bundleType) {
     replace({
       "process.env.NODE_ENV": isProduction ? "'production'" : "'development'"
     }),
-
-    // We still need CommonJS for external deps like object-assign.
-    commonjs(),
 
     // Apply dead code elimination and/or minification.
     isProduction &&
