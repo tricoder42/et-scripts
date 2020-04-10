@@ -13,7 +13,7 @@ module.exports = {
     "locale",
     "fixtures",
     ".*.json$",
-    ".*.js.snap$"
+    ".*.js.snap$",
   ],
-  coverageReporters: ["html", "lcov", "text"]
+  coverageReporters: ["html", "lcov"],
 }
